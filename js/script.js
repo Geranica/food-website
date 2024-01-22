@@ -246,15 +246,14 @@ document.addEventListener("DOMContentLoaded", () => {
         object[key] = value;
       });
 
-
       fetch("server.php", {
         method: "POST",
         headers: {
           "Content-type": "multipart/form-data",
         },
-        body: JSON.stringify(object)
+        body: JSON.stringify(object),
       })
-        .then (data => data.text ())
+        .then((data) => data.text())
         .then((data) => {
           console.log(data);
           showThanksModal(message.success);
@@ -263,13 +262,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(() => {
           showThanksModal(message.failure);
         })
-        .finally (() => {
+        .finally(() => {
           form.reset();
         });
     });
   }
-
-
 
   function showThanksModal(message) {
     const prevModalDialog = document.querySelector(".modal__dialog");
@@ -294,6 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
       body.classList.remove("hidden");
     }, 2500);
   }
-
- 
+  fetch("http://localhost:3000/menu")
+    .then((data) => data.json())
+    .then((res) => console.log(res));
 });
