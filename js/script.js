@@ -341,6 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Slider (variant 2)
 
   const slides = document.querySelectorAll ('.offer__slide');
+  const slider = document.querySelector ('.offer__slider');//оболочка всего слайдера
   const prevSlideBtn = document.querySelector ('.offer__slider-prev');
   const nextSlideBtn = document.querySelector ('.offer__slider-next');
   const currentSlide = document.querySelector ('#current');
@@ -348,7 +349,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const slidesWrapper = document.querySelector('.offer__slider-wrapper');//окно для просмотра слайдов
   const slidesField = document.querySelector ('.offer__slider-inner');// оболочка со всеми слайдами
   const width = window.getComputedStyle (slidesWrapper).width; //ширина окна для просмотра слайдов. Формат: строка, значение + px
-
+  
+  //ориентир для счетчика показа слайдов
   let indexOfSlide = 1;
 
   totalSlides.textContent = `${slides.length.toString().padStart(2, 0)}`;
@@ -374,7 +376,27 @@ document.addEventListener("DOMContentLoaded", () => {
     slide.style.width = width;
   });
 
+  slider.style.position = 'relative';
 
+  //создаем панель навигации
+  const indicators = document.createElement ('ol');
+  const dots = [];
+  
+  //добавляем стили для панели навигации
+  indicators.classList.add ('carousel-indicators');
+
+  slider.append (indicators);
+
+  for (let i = 0; i < slides.length; i++) {
+    const dot = document.createElement ('li');
+    dot.setAttribute ('data-slide-to', i + 1);
+    dot.classList.add ('dot');
+    if (i === 0) {
+      dot.classList.add ('dot_active');
+    }
+    indicators.append (dot);
+    dots.push (dot);
+  }
 
   nextSlideBtn.addEventListener ('click', () => {
     // делаем проверку, последний ли слайд
@@ -395,6 +417,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     currentSlide.textContent = `${indexOfSlide.toString().padStart(2, 0)}`;
+
+    dots.forEach ((item) => {
+      item.classList.add ('dot_inactive');
+      item.classList.remove ('dot_active');
+    });
+
+    dots[indexOfSlide - 1].classList.remove ('dot_inactive');
+    dots[indexOfSlide - 1].classList.add ('dot_active');
   });
 
   prevSlideBtn.addEventListener ('click', () => {
@@ -402,7 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // делаем проверку, первый ли у нас слайд
     if (offset === 0) {
       // записываем в переменную offset последний слайд
-      offset = parseFloat (width) * (slides.length - 1)
+      offset = parseFloat (width) * (slides.length - 1);
     // Если не последний, то в offset добавляется ширина еще одного слайда
     } else {
       offset -= parseFloat (width);
@@ -418,9 +448,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     currentSlide.textContent = `${indexOfSlide.toString().padStart(2, 0)}`;
+
+    dots.forEach ((item) => {
+      item.classList.add ('dot_inactive');
+      item.classList.remove ('dot_active');
+    });
+
+    dots[indexOfSlide - 1].classList.remove ('dot_inactive');
+    dots[indexOfSlide - 1].classList.add ('dot_active');
   });
 
-   
+   dots.forEach (item => {
+    item.addEventListener ('click', (e) => {
+
+      const slideTo = e.target.getAttribute('data-slide-to');
+      indexOfSlide = slideTo;
+      offset = parseFloat (width) * (slideTo - 1);
+      slidesField.style.transform = `translateX(-${offset}px)`;
+
+      currentSlide.textContent = `${indexOfSlide.toString().padStart(2, 0)}`;
+
+      dots.forEach ((item) => {
+        item.classList.add ('dot_inactive');
+        item.classList.remove ('dot_active');
+      });
   
+      dots[indexOfSlide - 1].classList.remove ('dot_inactive');
+      dots[indexOfSlide - 1].classList.add ('dot_active');
+    });
+   });
 
 });
