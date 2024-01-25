@@ -292,9 +292,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
 
-  // Slider
+  // Slider (variant 1)
 
-  const slides = document.querySelectorAll ('.offer__slide');
+  /* const slides = document.querySelectorAll ('.offer__slide');
   const prevSlideBtn = document.querySelector ('.offer__slider-prev');
   const nextSlideBtn = document.querySelector ('.offer__slider-next');
   const currentSlide = document.querySelector ('#current');
@@ -335,6 +335,92 @@ document.addEventListener("DOMContentLoaded", () => {
       indexOfSlide--;
       showSlide ();
     }
+  }); */
+
+
+  // Slider (variant 2)
+
+  const slides = document.querySelectorAll ('.offer__slide');
+  const prevSlideBtn = document.querySelector ('.offer__slider-prev');
+  const nextSlideBtn = document.querySelector ('.offer__slider-next');
+  const currentSlide = document.querySelector ('#current');
+  const totalSlides = document.querySelector ('#total');
+  const slidesWrapper = document.querySelector('.offer__slider-wrapper');//окно для просмотра слайдов
+  const slidesField = document.querySelector ('.offer__slider-inner');// оболочка со всеми слайдами
+  const width = window.getComputedStyle (slidesWrapper).width; //ширина окна для просмотра слайдов. Формат: строка, значение + px
+
+  let indexOfSlide = 1;
+
+  totalSlides.textContent = `${slides.length.toString().padStart(2, 0)}`;
+  currentSlide.textContent = `${indexOfSlide.toString().padStart(2, 0)}`;
+
+  //ориентир для показа текущего слайда
+  let offset = 0;
+
+  // 100 % умножаем на количество слайдов и записываем это значение как ширину иннера. Таким образом он займет 400% ширины своего родителя (slidesWrapper)
+  slidesField.style.width = 100 * slides.length + '%'; 
+
+  // все слайды выстроить в строку
+  slidesField.style.display = 'flex';
+
+  // добавить плавности
+  slidesField.style.transition = '0.5s all';
+
+  //скрываем все слайды кроме одного
+  slidesWrapper.style.overflow = 'hidden';
+
+  // делаем все слайды одинаковой ширины
+  slides.forEach (slide => {
+    slide.style.width = width;
   });
+
+
+
+  nextSlideBtn.addEventListener ('click', () => {
+    // делаем проверку, последний ли слайд
+    if (offset === parseFloat (width) * (slides.length - 1)) {
+      offset = 0;
+    // Если не последний, то в offset добавляется ширина еще одного слайда
+    } else {
+      offset += parseFloat (width);
+    }
+
+    // смещает оболочку со слайдами влево на величину offset
+    slidesField.style.transform = `translateX(-${offset}px)`;
+
+    if (indexOfSlide === slides.length) {
+      indexOfSlide = 1;
+    } else {
+      indexOfSlide++;
+    }
+
+    currentSlide.textContent = `${indexOfSlide.toString().padStart(2, 0)}`;
+  });
+
+  prevSlideBtn.addEventListener ('click', () => {
+
+    // делаем проверку, первый ли у нас слайд
+    if (offset === 0) {
+      // записываем в переменную offset последний слайд
+      offset = parseFloat (width) * (slides.length - 1)
+    // Если не последний, то в offset добавляется ширина еще одного слайда
+    } else {
+      offset -= parseFloat (width);
+    }
+
+    // смещает оболочку со слайдами влево на величину offset
+    slidesField.style.transform = `translateX(-${offset}px)`;
+
+    if (indexOfSlide === 1) {
+      indexOfSlide = slides.length;
+    } else {
+      indexOfSlide--;
+    }
+
+    currentSlide.textContent = `${indexOfSlide.toString().padStart(2, 0)}`;
+  });
+
+   
+  
 
 });
