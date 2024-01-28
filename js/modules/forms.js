@@ -1,7 +1,10 @@
-function forms () {
-   // Forms
+import { postData } from "../services/servises";
 
-  const forms = document.querySelectorAll("form");
+// forms
+function forms (modalSelector, bodySelector, formSelector) {
+  const forms = document.querySelectorAll(formSelector);
+  const modalWindow = document.querySelector(modalSelector);
+  const body = document.querySelector(bodySelector);
 
   const message = {
     loading: "img/spinner.svg",
@@ -12,18 +15,6 @@ function forms () {
   forms.forEach((item) => {
     bindPostData(item);
   });
-
-  const postData = async (url, data) => {
-    const res = await fetch (url, {
-      method: "POST",
-      headers: {
-        "Content-type": "multipart/form-data",
-      },
-      body: data,
-    });
-
-    return await res.json ();
-  };
 
   function bindPostData(form) {
     form.addEventListener("submit", (e) => {
@@ -83,4 +74,4 @@ function forms () {
 }
 
 
-module.exports = forms;
+export default forms;

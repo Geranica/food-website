@@ -1,9 +1,10 @@
-function modal () {
+
+function modal (triggerSelector, modalSelector, bodySelector) {
    //Modal window
 
-  const modalBtns = document.querySelectorAll("[data-modal]");
-  const modalWindow = document.querySelector(".modal");
-  const body = document.querySelector("body");
+  const modalBtns = document.querySelectorAll(triggerSelector);
+  const modalWindow = document.querySelector(modalSelector);
+  const body = document.querySelector(bodySelector);
 
   function showAndHideModalWindow() {
     modalWindow.classList.toggle("show");
@@ -36,7 +37,7 @@ function modal () {
   const modalTimerId = setTimeout(() => {
     // Делает активным модальное окно через указанное количество времени
     showAndHideModalWindow();
-  }, 50000);
+  }, 30000);
 
   function showModalByScroll() {
     if (
@@ -50,4 +51,4 @@ function modal () {
   window.addEventListener("scroll", showModalByScroll);
 }
 
-module.exports = modal;
+export default modal;
