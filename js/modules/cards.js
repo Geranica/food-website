@@ -1,7 +1,6 @@
 import { getResource } from "../services/servises";
 
 function cards() {
-
   // classes for cards
 
   class MenuCard {

@@ -9,13 +9,22 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   
-  tabs();
+  tabs(".tabheader__item", ".tabcontent", ".tabheader__items", "show", "hide", "fade", "tabheader__item_active");
   modal("[data-modal]", ".modal", "body");
-  timer();
+  timer(".timer", "2024-02-15T18:00");
   cards();
   calc();
   forms(".modal", "body", "form");
-  slider();
+  slider({
+    container: '.offer__slider',
+    slide: '.offer__slide',
+    nextArrow: '.offer__slider-next',
+    prevArrow: '.offer__slider-prev',
+    totalCounter: '#total',
+    currentCounter: '#current',
+    wrapper: '.offer__slider-wrapper',
+    field: '.offer__slider-inner'
+  });
 
 });
 

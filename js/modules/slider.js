@@ -1,4 +1,13 @@
-function slider () {
+function slider ({
+  container,
+  slide,
+  nextArrow,
+  prevArrow,
+  totalCounter,
+  currentCounter,
+  wrapper,
+  field
+}) {
    // Slider (variant 1)
 
   /* const slides = document.querySelectorAll ('.offer__slide');
@@ -47,14 +56,14 @@ function slider () {
 
   // Slider (variant 2)
 
-  const slides = document.querySelectorAll ('.offer__slide');
-  const slider = document.querySelector ('.offer__slider');//оболочка всего слайдера
-  const prevSlideBtn = document.querySelector ('.offer__slider-prev');
-  const nextSlideBtn = document.querySelector ('.offer__slider-next');
-  const currentSlide = document.querySelector ('#current');
-  const totalSlides = document.querySelector ('#total');
-  const slidesWrapper = document.querySelector('.offer__slider-wrapper');//окно для просмотра слайдов
-  const slidesField = document.querySelector ('.offer__slider-inner');// оболочка со всеми слайдами
+  const slides = document.querySelectorAll (slide);
+  const slider = document.querySelector (container);//оболочка всего слайдера
+  const prevSlideBtn = document.querySelector (prevArrow);
+  const nextSlideBtn = document.querySelector (nextArrow);
+  const currentSlide = document.querySelector (currentCounter);
+  const totalSlides = document.querySelector (totalCounter);
+  const slidesWrapper = document.querySelector(wrapper);//окно для просмотра слайдов
+  const slidesField = document.querySelector (field);// оболочка со всеми слайдами
   const width = window.getComputedStyle (slidesWrapper).width; //ширина окна для просмотра слайдов. Формат: строка, значение + px
   
   //ориентир для счетчика показа слайдов

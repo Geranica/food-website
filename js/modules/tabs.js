@@ -1,31 +1,38 @@
-function tabs () {
-   
-   //Tabs
+function tabs(
+  tabsSelector,
+  tabsContentSelector,
+  tabsParentSelector,
+  showSelector,
+  hideSelector,
+  animationSelector,
+  activityClass
+) {
+  //tabs
 
-  const tabs = document.querySelectorAll(".tabheader__item");
-  const tabsContent = document.querySelectorAll(".tabcontent");
-  const tabsParent = document.querySelector(".tabheader__items");
+  const tabs = document.querySelectorAll(tabsSelector);
+  const tabsContent = document.querySelectorAll(tabsContentSelector);
+  const tabsParent = document.querySelector(tabsParentSelector);
 
   function hideTabContent() {
     tabsContent.forEach((item) => {
-      item.classList.add("hide");
-      item.classList.remove("show", "fade");
+      item.classList.add(hideSelector);
+      item.classList.remove(showSelector, animationSelector);
     });
 
     tabs.forEach((item) => {
-      item.classList.remove("tabheader__item_active");
+      item.classList.remove(activityClass);
     });
   }
 
   function showTabContent(i = 0) {
-    tabsContent[i].classList.add("show", "fade");
-    tabsContent[i].classList.remove("hide");
-    tabs[i].classList.add("tabheader__item_active");
+    tabsContent[i].classList.add(showSelector, animationSelector);
+    tabsContent[i].classList.remove(hideSelector);
+    tabs[i].classList.add(activityClass);
   }
 
   tabsParent.addEventListener("click", (event) => {
     const target = event.target;
-    if (target && target.matches(".tabheader__item")) {
+    if (target && target.matches(tabsSelector)) {
       hideTabContent();
       showTabContent(Array.from(tabs).indexOf(target));
     }
